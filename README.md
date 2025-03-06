@@ -271,6 +271,14 @@ Abhängigkeiten installieren:
 rosdep install -q -y -r --from-paths src --ignore-src
 ```
 
+Slam Toolbox konfigurieren
+
+-unter ros2_ws/src/slam_toolbox/config/mapper_params_online_asnyc.yaml frames anpassen
+
+Slam Toolbox Ausführen
+```
+ros2 launch slam_toolbox online_async_launch.py
+```
 
 ____
 # 4. Navigation mit Nav2
