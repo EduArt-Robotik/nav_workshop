@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Setup ROS 2 environment
+source /opt/ros/jazzy/setup.bash
+source /home/user/ros/install/setup.bash
+#export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+
+# Own usb serial device
+for device in /dev/ttyUSB*; do
+    if [ -e "$device" ]; then
+        echo "Setting permissions for $device"
+        sudo chown user:user "$device"
+    fi
+done
+
+exec "$@"

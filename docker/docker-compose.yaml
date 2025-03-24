@@ -1,0 +1,25 @@
+services:
+    edu_sensorring_ros2:
+        build:
+          context: ./
+          dockerfile: ./Dockerfile
+        image: edu_navigation
+        container_name: edu_navigation_ros2
+        user: user
+        restart: no #always
+        privileged: true
+        ipc: host
+        pid: host
+        mem_limit: 70000mb
+        environment:
+            - RMW_IMPLEMENTATION=${RMW_IMPLEMENTATION}
+            - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+            - FASTRTPS_DEFAULT_PROFILES_FILE=/home/${USER}/ros/launch_content/fastrtps_config.xml # Disable shared memory (/dev/shm) when using the rmw_fastrtps_cpp middleware. Not pretty but works. The rmw_cyclonedds_cpp middleware works out of the box and does not require this fix.
+        network_mode: "host"
+        command: bash -c 'cd /home/user/ros/launch_content; ros2 launch navigation.launch.py'
+        # command: /bin/bash
+        # stdin_open: true
+        volumes:
+            - './launch_content:/home/user/ros/launch_content'
+        devices:
+            - '/dev:/dev'
