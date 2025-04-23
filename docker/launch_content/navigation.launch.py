@@ -82,7 +82,22 @@ def generate_launch_description():
       }.items()
     )
 
-    nav2_node = IncludeLaunchDescription(
+    nav2_localization_node = IncludeLaunchDescription(
+      PythonLaunchDescriptionSource([
+        PathJoinSubstitution([
+            FindPackageShare('nav2_bringup'),
+            'launch',
+            'localization_launch.py'
+        ])
+      ]),
+
+      launch_arguments={
+        'params_file': nav2_params,
+        'use_sim_time': 'false'
+      }.items(),
+    )
+
+    nav2_navigation_node = IncludeLaunchDescription(
       PythonLaunchDescriptionSource([
         PathJoinSubstitution([
             FindPackageShare('nav2_bringup'),
@@ -98,10 +113,11 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        #edu_drive,
+        edu_drive,
         lidar_node,
         lidar_tf,
-        csm_node, # edu_drive_ros2 also publishes odometry data. Make sure you only have one active odometry source at a time.
+        #csm_node, # edu_drive_ros2 also publishes odometry data. Make sure you only have one active odometry source at a time.
         slam_toolbox_node,
-        nav2_node
+        #nav2_localization_node,
+        nav2_navigation_node
     ])

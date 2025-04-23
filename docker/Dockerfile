@@ -42,7 +42,7 @@ WORKDIR /home/$USER/ros/src
 
 # get the edu_drive_ros2 package
 RUN source /opt/ros/jazzy/setup.bash \
-    && git clone https://github.com/EduArt-Robotik/edu_drive_ros2.git \
+    && git clone https://github.com/EduArt-Robotik/edu_drive_ros2.git -b master\
     && cd .. \
     && colcon build --packages-select edu_drive_ros2 --symlink-install
 
